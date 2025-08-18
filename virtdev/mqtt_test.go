@@ -27,7 +27,7 @@ func TestExtractorTmpl(t *testing.T) {
 			},
 		},
 		{
-			`{{with parseUrlQ .}}{{if contains .ison "true"}}{{.brightness}}{{else}}0{{end}}{{end}}`,
+			`{{with parseURLQuery .}}{{if contains .ison "true"}}{{.brightness}}{{else}}0{{end}}{{end}}`,
 			[]SubCase{
 				{`brightness=21&ison=false`, 0.0, ""},
 				{`brightness=42&ison=true`, 42.0, ""},

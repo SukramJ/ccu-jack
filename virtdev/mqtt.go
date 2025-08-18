@@ -164,7 +164,7 @@ func parseJSON(str string) (interface{}, error) {
 	return obj, nil
 }
 
-func parseUrlQuery(str string) (interface{}, error) {
+func parseURLQuery(str string) (interface{}, error) {
 	values, err := url.ParseQuery(str)
 	if err != nil {
 		return nil, err
@@ -254,20 +254,20 @@ func mapRange(inMin, inMax, outMin, outMax, value interface{}) (float64, error) 
 }
 
 var tmplFuncs = template.FuncMap{
-	"contains":  strings.Contains,
-	"fields":    strings.Fields,
-	"split":     strings.Split,
-	"toLower":   strings.ToLower,
-	"toUpper":   strings.ToUpper,
-	"trimSpace": strings.TrimSpace,
-	"parseJSON": parseJSON,
-	"parseUrlQ": parseUrlQuery,  
-	"round":     wrapUnaryFunc(func(a float64) (float64, error) { return math.Round(a), nil }),
-	"add":       wrapBinaryFunc(func(a, b float64) (float64, error) { return a + b, nil }),
-	"sub":       wrapBinaryFunc(func(a, b float64) (float64, error) { return a - b, nil }),
-	"mul":       wrapBinaryFunc(func(a, b float64) (float64, error) { return a * b, nil }),
-	"div":       wrapBinaryFunc(func(a, b float64) (float64, error) { return a / b, nil }),
-	"mapRange":  mapRange,
+	"contains":      strings.Contains,
+	"fields":        strings.Fields,
+	"split":         strings.Split,
+	"toLower":       strings.ToLower,
+	"toUpper":       strings.ToUpper,
+	"trimSpace":     strings.TrimSpace,
+	"parseJSON":     parseJSON,
+	"parseURLQuery": parseURLQuery,
+	"round":         wrapUnaryFunc(func(a float64) (float64, error) { return math.Round(a), nil }),
+	"add":           wrapBinaryFunc(func(a, b float64) (float64, error) { return a + b, nil }),
+	"sub":           wrapBinaryFunc(func(a, b float64) (float64, error) { return a - b, nil }),
+	"mul":           wrapBinaryFunc(func(a, b float64) (float64, error) { return a * b, nil }),
+	"div":           wrapBinaryFunc(func(a, b float64) (float64, error) { return a / b, nil }),
+	"mapRange":      mapRange,
 }
 
 type paramSet int
