@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"math"
+	"net/url"
 	"regexp"
 	"strconv"
 	"strings"
@@ -163,6 +164,20 @@ func parseJSON(str string) (interface{}, error) {
 	return obj, nil
 }
 
+func parseUrlQuery(str string) (interface{}, error) {
+	values, err := url.ParseQuery(str)
+	if err != nil {
+		return nil, err
+	}
+	obj := make(map[string]interface{})
+	for key, vals := range values {
+		if len(vals) > 0 {
+			obj[key] = vals[0]
+		}
+	}
+	return obj, nil
+}
+
 func wrapUnaryFunc(f func(a float64) (float64, error)) func(a interface{}) (float64, error) {
 	return func(a interface{}) (float64, error) {
 		q := any.Q(a)
@@ -246,6 +261,7 @@ var tmplFuncs = template.FuncMap{
 	"toUpper":   strings.ToUpper,
 	"trimSpace": strings.TrimSpace,
 	"parseJSON": parseJSON,
+	"parseUrlQ": parseUrlQuery,  
 	"round":     wrapUnaryFunc(func(a float64) (float64, error) { return math.Round(a), nil }),
 	"add":       wrapBinaryFunc(func(a, b float64) (float64, error) { return a + b, nil }),
 	"sub":       wrapBinaryFunc(func(a, b float64) (float64, error) { return a - b, nil }),

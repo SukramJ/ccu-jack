@@ -27,6 +27,16 @@ func TestExtractorTmpl(t *testing.T) {
 			},
 		},
 		{
+			`{{with parseUrlQ .}}{{if contains .ison "true"}}{{.brightness}}{{else}}0{{end}}{{end}}`,
+			[]SubCase{
+				{`brightness=21&ison=false`, 0.0, ""},
+				{`brightness=42&ison=true`, 42.0, ""},
+				{`brightness=a&ison=true`, 0.0, "invalid number literal 'a'"},
+				{`ison=true`, 0.0, "invalid number literal '<no value>'"},
+				{``, 0.0, "invalid number literal"},
+			},
+		},
+		{
 			`{{if contains . "b"}}1{{else}}0{{end}}`,
 			[]SubCase{
 				{`abc`, 1.0, ""},
